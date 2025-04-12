@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <title>Hvor gammel blir mamma egentlig?</title>
   <style>
     html, body {
@@ -27,14 +26,36 @@
       font-weight: 900;
       line-height: 1;
       text-align: center;
-      font-size: 70vmin;
       white-space: nowrap;
+      font-size: 20vmin; /* Initial guess */
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
-    <div class="number">57 eller 80</div>
+    <div class="number" id="fit-text">57 eller 80</div>
   </div>
+
+  <script>
+    function fitText(el, maxWidth, maxHeight) {
+      let fontSize = 100;
+      el.style.fontSize = fontSize + 'px';
+
+      const parent = el.parentElement;
+      while (
+        (el.scrollWidth > parent.clientWidth || el.scrollHeight > parent.clientHeight) &&
+        fontSize > 10
+      ) {
+        fontSize -= 1;
+        el.style.fontSize = fontSize + 'px';
+      }
+    }
+
+    const el = document.getElementById('fit-text');
+    fitText(el);
+
+    // Optional: re-fit on resize
+    window.addEventListener('resize', () => fitText(el));
+  </script>
 </body>
 </html>
